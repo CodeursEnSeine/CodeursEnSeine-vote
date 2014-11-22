@@ -5,6 +5,9 @@ import com.codeursenseine.model.ces.*;
 import com.github.kevinsawicki.http.HttpRequest;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import net.sf.ehcache.Cache;
+import net.sf.ehcache.CacheManager;
+import net.sf.ehcache.Element;
 
 import java.sql.*;
 import java.time.LocalDate;
@@ -23,6 +26,9 @@ public class Service {
 
     DateHelper dateHelper=new DateHelper();
 
+    CacheManager cacheManager=CacheManager.create();
+    Cache cache=null;
+
     public Service() {
         String dbUrl = "jdbc:mysql://127.0.0.1/cesvote";
         String dbClass = "com.mysql.jdbc.Driver";
@@ -36,17 +42,39 @@ public class Service {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
+        cacheManager.addCacheIfAbsent("cesapi");
+        cache = cacheManager.getCache("cesapi");
+
+
     }
 
     public Service(Connection connection,DateHelper dateHelper) {
         this.connection=connection;
         this.dateHelper=dateHelper;
+        cacheManager.addCacheIfAbsent("cesapi");
+        cache = cacheManager.getCache("cesapi");
     }
 
     public List<Talk> getTalks() {
         List<Talk> out=new ArrayList<>();
-        Conference conf=new Gson().fromJson(HttpRequest.get("http://www.codeursenseine.com/2014/programme.json").body(),new TypeToken<Conference>(){}.getType());
-        List<Speaker> speakers=new Gson().fromJson(HttpRequest.get("http://www.codeursenseine.com/2014/speakers.json").body(),new TypeToken<List<Speaker>>(){}.getType());
+        Conference conf=null;
+        if (cache.get("programme")!=null) {
+            conf=(Conference) cache.get("programme").getObjectValue();
+        }
+        if (conf==null) {
+            conf=new Gson().fromJson(HttpRequest.get("http://www.codeursenseine.com/2014/programme.json").body(), new TypeToken<Conference>() {
+            }.getType());
+            cache.put(new Element("programme",conf));
+        }
+        List<Speaker> speakers=null;
+        if (cache.get("speakers")!=null) {
+            speakers=(List<Speaker>)cache.get("speakers").getObjectValue();
+        }
+        if (speakers==null) {
+            speakers = new Gson().fromJson(HttpRequest.get("http://www.codeursenseine.com/2014/speakers.json").body(), new TypeToken<List<Speaker>>() {
+            }.getType());
+            cache.put(new Element("speakers",speakers));
+        }
         Map<String,Speaker> speakerMap=new HashMap<>();
         if (speakers!=null) {
             Iterator<Speaker> its = speakers.iterator();
