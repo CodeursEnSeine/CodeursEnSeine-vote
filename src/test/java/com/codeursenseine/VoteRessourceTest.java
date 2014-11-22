@@ -86,6 +86,7 @@ public class VoteRessourceTest {
         //Then
         assertThat(talks).isNotEmpty();
         assertThat(talks).hasSize(1);
+        assertThat(talks.get(0).speakerName).isNotEmpty();
     }
 
     @Test

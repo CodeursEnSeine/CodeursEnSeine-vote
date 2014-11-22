@@ -2,13 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Notez votre talk Codeurs en Seine</title>
+    <title>Codeurs en Seine - Notez</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="/webjars/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body ng-app="vote" ng-controller="VoteCtrl">
 
 <div ng-show="showTalks">
+    <div>Choisissez votre session</div>
     <div ng-repeat="talk in talks" />
         <div ng-click="showVote(talk.talkid)"/>
              {{talk.talkTitle}}

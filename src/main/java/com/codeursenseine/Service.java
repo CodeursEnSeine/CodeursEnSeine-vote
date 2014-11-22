@@ -1,10 +1,7 @@
 package com.codeursenseine;
 
 import com.codeursenseine.model.Talk;
-import com.codeursenseine.model.ces.Conference;
-import com.codeursenseine.model.ces.Programme;
-import com.codeursenseine.model.ces.Talks;
-import com.codeursenseine.model.ces.Tracks;
+import com.codeursenseine.model.ces.*;
 import com.github.kevinsawicki.http.HttpRequest;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -15,10 +12,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalUnit;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by youen on 18/11/2014.
@@ -52,6 +46,19 @@ public class Service {
     public List<Talk> getTalks() {
         List<Talk> out=new ArrayList<>();
         Conference conf=new Gson().fromJson(HttpRequest.get("http://www.codeursenseine.com/2014/programme.json").body(),new TypeToken<Conference>(){}.getType());
+        List<Speaker> speakers=new Gson().fromJson(HttpRequest.get("http://www.codeursenseine.com/2014/speakers.json").body(),new TypeToken<List<Speaker>>(){}.getType());
+        Map<String,Speaker> speakerMap=new HashMap<>();
+        if (speakers!=null) {
+            Iterator<Speaker> its = speakers.iterator();
+            while(its.hasNext()) {
+                Speaker speaker= its.next();
+                if (speaker.talks!=null && speaker.talks.size()>=1) {
+                    speakerMap.put(speaker.talks.get(0).id, speaker);
+                }
+            }
+        }
+
+
         Iterator<Tracks> it=conf.programme.jours.get(0).tracks.iterator();
         while(it.hasNext()) {
             Tracks track=it.next();
@@ -69,6 +76,9 @@ public class Service {
                 talk.talkid=talks.id;
                 talk.room=talks.room;
                 talk.talkTitle=talks.title;
+                if (speakerMap.containsKey(talks.id)) {
+                    talk.speakerName=speakerMap.get(talks.id).fullname;
+                }
                 out.add(talk);
             }
         }
