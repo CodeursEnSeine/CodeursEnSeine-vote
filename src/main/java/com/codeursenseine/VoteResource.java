@@ -1,7 +1,9 @@
 package com.codeursenseine;
 
 import com.codeursenseine.model.Talk;
+import com.codeursenseine.model.Vote;
 import net.codestory.http.annotations.Get;
+import net.codestory.http.annotations.Post;
 
 import java.util.List;
 
@@ -25,9 +27,9 @@ public class VoteResource {
        return service.getTalks();
     }
 
-    @Get("/vote")
-    public void addVote(String talkid,int vote) {
-        service.addVote(talkid,vote);
+    @Post("/vote")
+    public void addVote(Vote vote) {
+        service.addVote(vote);
     }
 }
 

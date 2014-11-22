@@ -8,14 +8,32 @@
 </head>
 <body ng-app="vote" ng-controller="VoteCtrl">
 
-<div ng-show="showTalks">
+<div id="talks" ng-show="currentTab=='talks'">
     <div>Choisissez votre session</div>
+    <button ng-click="refreshTalks()">Rafraichir</button>
     <div ng-repeat="talk in talks" />
-        <div ng-click="showVote(talk.talkid)"/>
+        <div ng-click="gotoVote(talk)"/>
              {{talk.talkTitle}}
              {{talk.room}} {{talk.speakerName}}
         </div>
     </div>
+</div>
+<div id="vote" ng-show="currentTab=='vote'">
+    <div>Evaluer la session</div>
+    <div>{{talk.talkTitle}} {{talk.room}} {{talk.speakerName}}</div>
+    <div ng-click="addVote(currenttalk.talkid,1)">+1</div>
+    <div ng-click="addVote(currenttalk.talkid,0)">0</div>
+    <div ng-click="addVote(currenttalk.talkid,-1)">-1</div>
+</div>
+<div id="sendingvote" ng-show="currentTab=='sendingvote'">
+    <p>En cours d'envoi.</p>
+    <div ng-show="showerrorsending">
+        <button ng-click="addVote(currenttalk.talkid,currentvote)">Renvoyer</button>
+    </div>
+</div>
+<div id="thanks" ng-show="currentTab=='thanks'">
+    <p>Merci de votre contribution.</p>
+    <button ng-click="gotoTalks()">Retourner à la liste des talks</button>
 </div>
 
 <script src="/webjars/bootstrap/3.3.1/js/bootstrap.js"></script>

@@ -1,6 +1,7 @@
 package com.codeursenseine;
 
 import com.codeursenseine.model.Talk;
+import com.codeursenseine.model.Vote;
 import com.codeursenseine.model.ces.*;
 import com.github.kevinsawicki.http.HttpRequest;
 import com.google.gson.Gson;
@@ -114,10 +115,10 @@ public class Service {
         return out;
     }
 
-    public void addVote(String talkid, int vote) {
+    public void addVote(Vote vote) {
         try {
             Statement statement = connection.createStatement();
-            statement.execute("INSERT INTO VOTE(VOTEDATETIME,TALKID,VOTE) VALUES ('" + LocalDateTime.now().toString() + "','" + talkid + "'," + vote +")");
+            statement.execute("INSERT INTO VOTE(VOTEDATETIME,TALKID,VOTE) VALUES ('" + LocalDateTime.now().toString() + "','" + vote.talkid + "'," + vote.votevalue +")");
         } catch (SQLException e) {
             e.printStackTrace();
         }

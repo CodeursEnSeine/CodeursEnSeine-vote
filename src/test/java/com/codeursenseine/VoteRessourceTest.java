@@ -2,6 +2,7 @@
 package com.codeursenseine;
 
 import com.codeursenseine.model.Talk;
+import com.codeursenseine.model.Vote;
 import com.github.kevinsawicki.http.HttpRequest;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -102,8 +103,11 @@ public class VoteRessourceTest {
     @Test
     public void should_add_vote() throws SQLException {
         //Given
+        Vote vote=new Vote();
+        vote.votevalue=1;
+        vote.talkid="123";
         //When
-        voteResource.addVote("123",1);
+        voteResource.addVote(vote);
         //Then
         Statement st=service.getConnection().createStatement();
         ResultSet rs=st.executeQuery("SELECT * FROM VOTE WHERE TALKID='123';");
