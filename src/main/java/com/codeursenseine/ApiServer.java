@@ -5,6 +5,7 @@ import net.codestory.http.Configuration;
 import net.codestory.http.WebServer;
 import net.codestory.http.routes.Routes;
 
+import java.io.IOException;
 
 
 /**
@@ -15,7 +16,8 @@ public class ApiServer {
     private static WebServer webServer;
 
 
-    public ApiServer() {
+    public ApiServer() throws IOException {
+        Config.loadConfig();
         initServer();
         startServer();
     }
@@ -27,26 +29,11 @@ public class ApiServer {
         }
     }
 
-    /**
-     * Get the port.
-     * <ul>
-     *     <li>Heroku : System.getenv("PORT")</li>
-     *     <li>Cloudbees : System.getProperty("app.port")</li>
-     *     <li>default : 9999</li>
-     * </ul>
-     * @return port to use
-     */
     private static int getPort() {
         // Heroku
         String herokuPort = System.getenv("PORT");
         if (herokuPort != null) {
             return Integer.parseInt(herokuPort);
-        }
-
-        // Cloudbees
-        String cloudbeesPort = System.getProperty("app.port");
-        if (cloudbeesPort != null) {
-            return Integer.parseInt(cloudbeesPort);
         }
 
         // Default port;

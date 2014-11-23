@@ -11,7 +11,7 @@ app.controller("VoteCtrl",["$scope","$http",function MainCtrl($scope, $http) {
         });
     }
     refreshTalks();
-    $scope.refreshTalks=refreshTalks();
+    $scope.refreshTalks=refreshTalks;
 
     $scope.gotoTalks= function () {
         $scope.currenttalk=undefined;

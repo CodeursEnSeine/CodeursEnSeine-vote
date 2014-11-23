@@ -31,10 +31,10 @@ public class Service {
     Cache cache=null;
 
     public Service() {
-        String dbUrl = "jdbc:mysql://127.0.0.1/cesvote";
-        String dbClass = "com.mysql.jdbc.Driver";
-        String username = "root";
-        String password = "";
+        String dbUrl = Config.getConfigProps().getProperty("db.url");
+        String dbClass = Config.getConfigProps().getProperty("db.class");
+        String username = Config.getConfigProps().getProperty("db.username");
+        String password = Config.getConfigProps().getProperty("db.password");
         try {
             Class.forName(dbClass);
             connection = DriverManager.getConnection(dbUrl, username, password);
