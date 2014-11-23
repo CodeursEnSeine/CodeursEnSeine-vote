@@ -15,7 +15,7 @@ public class VoteResource {
     private Service service;
 
     public VoteResource() {
-        service=new Service();
+        service=new Service(true);
     }
 
     public VoteResource(Service service) {

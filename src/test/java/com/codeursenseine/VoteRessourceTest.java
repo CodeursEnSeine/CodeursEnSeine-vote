@@ -14,6 +14,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
@@ -33,9 +34,10 @@ import static org.mockito.Mockito.when;
 public class VoteRessourceTest {
 
     @Mock
-    DateHelper dateHelper=new DateHelper();
+    DateHelper dateHelper;
 
-    Service service;
+    @InjectMocks
+    Service service=new Service(false);
 
     VoteResource voteResource;
 
@@ -61,7 +63,7 @@ public class VoteRessourceTest {
             Class.forName("org.h2.Driver");
             connection = DriverManager.getConnection("jdbc:h2:~/cesvote", "sa", "");
         }
-        service=new Service(connection,dateHelper);
+        service.setConnection(connection);
         voteResource= new VoteResource(service);
         DbSetup dbSetup = new DbSetup(new DriverManagerDestination("jdbc:h2:~/cesvote", "sa", ""), sequenceOf(CREATE_TABLES,DELETE_ALL));
         dbSetup.launch();

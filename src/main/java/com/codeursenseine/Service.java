@@ -30,28 +30,30 @@ public class Service {
     CacheManager cacheManager=CacheManager.create();
     Cache cache=null;
 
-    public Service() {
-        String dbUrl = Config.getConfigProps().getProperty("db.url");
-        String dbClass = Config.getConfigProps().getProperty("db.class");
-        String username = Config.getConfigProps().getProperty("db.username");
-        String password = Config.getConfigProps().getProperty("db.password");
-        try {
-            Class.forName(dbClass);
-            connection = DriverManager.getConnection(dbUrl, username, password);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+    public Service(boolean initdao) {
+        if (initdao) {
+            String dbUrl = Config.getConfigProps().getProperty("db.url");
+            String dbClass = Config.getConfigProps().getProperty("db.class");
+            String username = Config.getConfigProps().getProperty("db.username");
+            String password = Config.getConfigProps().getProperty("db.password");
+            try {
+                Class.forName(dbClass);
+                connection = DriverManager.getConnection(dbUrl, username, password);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
         }
-        cacheManager.addCacheIfAbsent("cesapi");
-        cache = cacheManager.getCache("cesapi");
-
-
+        init();
     }
 
-    public Service(Connection connection,DateHelper dateHelper) {
+    public Service(Connection connection) {
         this.connection=connection;
-        this.dateHelper=dateHelper;
+        init();
+    }
+
+    private void init() {
         cacheManager.addCacheIfAbsent("cesapi");
         cache = cacheManager.getCache("cesapi");
     }
@@ -127,5 +129,9 @@ public class Service {
 
     public Connection getConnection() {
         return connection;
+    }
+
+    public void setConnection(Connection connection) {
+        this.connection = connection;
     }
 }
