@@ -14,8 +14,8 @@
         </div>
     <a href="#" ng-click="refreshTalks()"  class="list-group-item list-group-item-info"><span class="glyphicon glyphicon-refresh"></span> Rafraichir</a>
     <a href="#" ng-repeat="talk in talks" ng-click="gotoVote(talk)" class="list-group-item">
-             {{talk.talkTitle}}
-             {{talk.room}} {{talk.speakerName}}
+        <h5 class="list-group-item-heading">{{talk.talkTitle}}</h5>
+        <p class="list-group-item-text"><strong>{{talk.room}}</strong> - {{talk.speakerName}}</p>
     </a>
    </div>
 </div>

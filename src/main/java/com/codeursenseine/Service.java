@@ -102,7 +102,7 @@ public class Service {
             }
             LocalTime nowtime=dateHelper.getCurrentTime();
 
-            if (nowtime.isAfter(tracktime.plus(30, ChronoUnit.MINUTES)) && nowtime.isBefore(tracktime.plus(60, ChronoUnit.MINUTES))) {
+            if (nowtime.isAfter(tracktime.plus(15, ChronoUnit.MINUTES)) && nowtime.isBefore(tracktime.plus(75, ChronoUnit.MINUTES))) {
                 Talk talk=new Talk();
                 talk.talkid=talks.id;
                 talk.room=talks.room;
