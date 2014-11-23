@@ -25,9 +25,9 @@
             <h4 class="list-group-item-heading">Evaluer la session</h4>
             <p class="list-group-item-text">{{talk.talkTitle}} {{talk.room}} {{talk.speakerName}}</p>
         </div>
-        <a  href="#" class="list-group-item  list-group-item-success" ng-click="addVote(currenttalk.talkid,1)"><span class="glyphicon glyphicon-thumbs-up"></span></a>
-        <a  href="#" class="list-group-item  list-group-item-info" ng-click="addVote(currenttalk.talkid,0)"><span class="glyphicon glyphicon-minus"></span></a>
-        <a  href="#" class="list-group-item  list-group-item-danger" ng-click="addVote(currenttalk.talkid,-1)"><span class="glyphicon glyphicon-thumbs-down"></span></a>
+        <a  href="#" class="list-group-item  list-group-item-success" ng-click="addVote(currenttalk.talkid,1)"><span class="glyphicon glyphicon-thumbs-up"></span> J'ai aimé</a>
+        <a  href="#" class="list-group-item  list-group-item-info" ng-click="addVote(currenttalk.talkid,0)"><span class="glyphicon glyphicon-minus"></span> Mitigé/Au milieu</a>
+        <a  href="#" class="list-group-item  list-group-item-danger" ng-click="addVote(currenttalk.talkid,-1)"><span class="glyphicon glyphicon-thumbs-down"></span> Je n'ai pas aimé</a>
     </div>
 </div>
 <div id="sendingvote" ng-show="currentTab=='sendingvote'" class="container-fluid">
