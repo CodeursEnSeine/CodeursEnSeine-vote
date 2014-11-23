@@ -1,0 +1,1 @@
+java -cp lib/vote-*.jar:lib/* com.codeursenseine.ApiServer

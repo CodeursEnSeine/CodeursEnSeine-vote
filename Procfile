@@ -1,1 +1,1 @@
-web:    java -cp target/classes:target/dependency/* com.codeursenseine.HelloWorld
+ces-vote:    java -cp lib/vote-*.jar:lib/* com.codeursenseine.ApiServer
