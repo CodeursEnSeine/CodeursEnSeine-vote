@@ -5,6 +5,7 @@ import com.codeursenseine.model.Vote;
 import net.codestory.http.annotations.Get;
 import net.codestory.http.annotations.Post;
 
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -28,7 +29,7 @@ public class VoteResource {
     }
 
     @Post("/vote")
-    public void addVote(Vote vote) {
+    public void addVote(Vote vote) throws SQLException {
         service.addVote(vote);
     }
 }

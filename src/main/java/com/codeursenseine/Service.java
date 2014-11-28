@@ -117,13 +117,9 @@ public class Service {
         return out;
     }
 
-    public void addVote(Vote vote) {
-        try {
-            Statement statement = connection.createStatement();
-            statement.execute("INSERT INTO VOTE(VOTEDATETIME,TALKID,VOTE) VALUES ('" + LocalDateTime.now().toString() + "','" + vote.talkid + "'," + vote.votevalue +")");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    public void addVote(Vote vote) throws SQLException {
+        Statement statement = connection.createStatement();
+        statement.execute("INSERT INTO VOTE(VOTEDATETIME,TALKID,VOTE) VALUES ('" + LocalDateTime.now().toString() + "','" + vote.talkid + "'," + vote.votevalue +")");
     }
 
 
